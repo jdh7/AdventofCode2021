@@ -1,8 +1,4 @@
-# from ElfTech import *
-# from SantasHelpers import *
 from ElfTech import *
-
-data = r'Data/test.in'
 
 # current_day = input("Please input the current day number: ")
 # current_part = input("Please input the current part (0 for both pars): ")
@@ -12,8 +8,6 @@ current_part = 0
 day_apps = [Sonar(),
            Sub_driving(),
            LifeSupport()]
-
-
 
 
 if __name__ == '__main__':
