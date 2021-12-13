@@ -1,19 +1,40 @@
 import sys, os
 from typing import Any
 
-def get_input(input_file, x=1) -> list[Any]:
-    if x == 1:
+def get_input(input_file, day=1) -> list[Any]:
+    if day == 1:
         with open(input_file, 'r') as f:
             df: list[Any] = [int(line.strip()) for line in f] #[int(line.strip()) for line in f]
         return df
-    if x == 2:
+    if day == 2:
         with open(input_file, 'r') as f:
             df = [line.split() for line in f]
         return df
-    if x == 3:
+    if day == 3:
         with open(input_file, 'r') as f:
             df: list[Any] = [line.strip() for line in f] #[int(line.strip()) for line in f]
         return df
+    if day == 4:
+        x = []
+        entry = []
+        with open(input_file, 'r') as f:
+            for line in f.readlines():
+                line = line.strip().split()
+                if not line:
+                    x.append(entry)
+                    entry = []
+                else:
+                    entry.append(line)
+        x.append(entry)
+        bingo_moves = x[0][0][0].split(',')
+        bingo_moves = list(map(int, bingo_moves))
+
+        boards = x[1:]
+        for i in range(len(boards)):
+            for j in range(len(boards[i])):
+                boards[i][j] = list(map(int, boards[i][j]))
+
+        return bingo_moves, boards
 
 def bin_to_dec(x:list[str])->int:
     return int((''.join(x)), 2)
