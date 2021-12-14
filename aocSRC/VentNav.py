@@ -43,10 +43,22 @@ class Coordinate:
 
 class VentNav:
     def __init__(self, input=5) -> None:
-        # self.input_file = r'Data/Day5.in'
-        self.input_file = r'Data/test.in'
+        self.input_file = r'Data/Day5.in'
+        # self.input_file = r'Data/test.in'
         self.coordinate_list = get_input(self.input_file, input)
         self.build_coords()
+
+    def run_day(self, part=0):
+        answers = []
+        a = [self.part_one(),
+            self.part_two()]
+        if part == 0:
+            answers.append(a[0])
+            answers.append(a[1])
+        else:
+            answers.append(a[part])
+        for i in answers:
+            yield i
 
     def build_coords(self) -> None:
         for ind, coords in enumerate(self.coordinate_list):
