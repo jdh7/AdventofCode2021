@@ -36,6 +36,18 @@ def get_input(input_file, day=1) -> list[Any]:
 
         return bingo_moves, boards
 
+    if day == 5:
+        with open(input_file, 'r') as f:
+            df = []
+            for line in f.readlines():
+                entry = []
+                line = line.strip().split('->')
+                for i in range(2):
+                    coords = list(map(int, line[i].strip().split(',')))
+                    entry.append(coords)
+                df.append(entry)
+        return df
+
 def bin_to_dec(x:list[str])->int:
     return int((''.join(x)), 2)
 

@@ -2,21 +2,7 @@
 from typing import Any, Union, Dict
 from SantasHelpers import get_input
 from collections import Counter
-import time
 
-def get_input(input_file, day=5) -> list[list[int]]:
-    # [[1,9],[2,9]]
-    if day == 5:
-        with open(input_file, 'r') as f:
-            df = []
-            for line in f.readlines():
-                entry = []
-                line = line.strip().split('->')
-                for i in range(2):
-                    coords = list(map(int, line[i].strip().split(',')))
-                    entry.append(coords)
-                df.append(entry)
-        return df
 
 class Coordinate:
     def __init__(self, coords) -> None:
@@ -27,7 +13,7 @@ class Coordinate:
 
     def find_all_points(self) -> list[int]:
         # [[1,2],[2,2]]
-        all_points = set() 
+        all_points = set()
         x_min, y_min = [min(i) for i in zip(*self.coords)]
         x_max, y_max = [max(i) for i in zip(*self.coords)]
         if (x_min == x_max) or (y_min == y_max):
@@ -37,14 +23,13 @@ class Coordinate:
                     _x = (i, j)
                     all_points.add(_x)
 
-
         if (x_min != x_max) and (y_min != y_max):
             x_1, x_2 = [self.coords[x][0] for x in range(2)]
             y_1, y_2 = [self.coords[x][1] for x in range(2)]
             x_slope = 1 if (x_1 < x_2) else -1
             y_slope = 1 if (y_1 < y_2) else -1
             moves = abs(x_1 - x_2)
-            
+
             for i in range(moves+1):
                 _x = (x_1, y_1)
                 all_points.add(_x)
@@ -54,10 +39,11 @@ class Coordinate:
         self.all_points = all_points
         return self.all_points
 
+
 class VentNav:
     def __init__(self, input=5) -> None:
         # self.input_file = r'Data/Day5.in'
-        self.input_file = r'Data/test.in' 
+        self.input_file = r'Data/test.in'
         self.coordinate_list = get_input(self.input_file, input)
         self.build_coords()
 
@@ -65,7 +51,7 @@ class VentNav:
         for ind, coords in enumerate(self.coordinate_list):
             self.coordinate_list[ind] = Coordinate(coords)
 
-    def part_one(self) -> int: # Part 2
+    def part_one(self) -> int:  # Part 2
         lst = []
         for i in self.coordinate_list:
             if not i.diagonal:
@@ -90,7 +76,6 @@ class VentNav:
         for i in x:
             r = i[1]
             c = i[0]
-            board[r][c]+=1
+            board[r][c] += 1
         for i in board:
             print(i)
-
