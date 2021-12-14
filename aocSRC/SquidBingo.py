@@ -4,7 +4,7 @@ from SantasHelpers import get_input
 
 # Suffering from too bad a headcold to write this any better
 class SquidBingo:
-    def __init__(self, input=4) -> int:
+    def __init__(self, input=4) -> None:
         self.input_file = r'Data/Day4.in'
         # self.input_file = r'Data/test.in' 
         self.moves, self.boards = get_input(self.input_file, input)
