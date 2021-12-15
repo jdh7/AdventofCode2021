@@ -3,37 +3,47 @@
 from typing import Any, Union, Dict
 # from SantasHelpers import get_input
 from collections import Counter
-from dataclasses import dataclass
 
-RAW = """3,3,2,1,4,1,1,2,3,1,1,2,1,2,1,1,1,1,1,1,4,1,1,5,2,1,1,2,1,1,1,3,5,1,5,5,1,1,1,1,3,1,1,3,2,1,1,1,1,1,1,4,1,1,1,1,1,1,1,4,1,3,3,1,1,3,1,3,1,2,1,3,1,1,4,1,2,4,4,5,1,1,1,1,1,1,4,1,5,1,1,5,1,1,3,3,1,3,2,5,2,4,1,4,1,2,4,5,1,1,5,1,1,1,4,1,1,5,2,1,1,5,1,1,1,5,1,1,1,1,1,3,1,5,3,2,1,1,2,2,1,2,1,1,5,1,1,4,5,1,4,3,1,1,1,1,1,1,5,1,1,1,5,2,1,1,1,5,1,1,1,4,4,2,1,1,1,1,1,1,1,3,1,1,4,4,1,4,1,1,5,3,1,1,1,5,2,2,4,2,1,1,3,1,5,5,1,1,1,4,1,5,1,1,1,4,3,3,3,1,3,1,5,1,4,2,1,1,5,1,1,1,5,5,1,1,2,1,1,1,3,1,1,1,2,3,1,2,2,3,1,3,1,1,4,1,1,2,1,1,1,1,3,5,1,1,2,1,1,1,4,1,1,1,1,1,2,4,1,1,5,3,1,1,1,2,2,2,1,5,1,3,5,3,1,1,4,1,1,4"""
-
-fish = [3,4,3,1,2]
-# fish = [int(i) for i in RAW.split(',')]
-def fishy_multiplier(cycles:int, fish: list[int]) -> int:
-    for i in range(cycles):
-        for i, e in enumerate(fish):
-            # print(f'i: {i}, e: {e}')
-            if e != 0:
-                fish[i] -= 1
-            if e == 0:
-                fish.append(9)
-                fish[i] = 6
-
-        # print(fish)
-        print(len(fish))
-
-fishy_multiplier(256, fish)
+input_file = 'Data/Day6.in'
+def get_input(input_file, day=6):
+    if day == 6:
+        with open(input_file, 'r') as f:
+            for line in f.readlines():
+                line = [int(i) for i in line.split(',')]
+    return line
 
 
-# oh noooo, idk how to do this second part :(
+class Fish_counter:
+    def __init__(self, starting_fish):
+        self.counts = self.initialize_counts(starting_fish)
 
+    def initialize_counts(self, fish):
+        counts = [0 for i in range(9)]
+        for i in fish:
+            counts[i] += 1
+        return counts
 
-
-
-
+    def cycle_fish(self):
+        new_count = [self.counts[i] for i in [1,2,3,4,5,6,7,8,0]]
+        new_count[6] += new_count[8]
+        print(new_count)
+        print(sum(new_count))
+        self.counts = [i for i in new_count]
 
 
 
+    def part_one(self, cycles):
+        for i in range(cycles):
+            self.cycle_fish()
+        return sum(self.counts)
+
+
+fish = get_input(input_file)
+print(fish)
+a = Fish_counter(fish)
+a.part_one(256)
+
+        
 
 
 
@@ -43,40 +53,14 @@ fishy_multiplier(256, fish)
 
 
 
-# def get_input(input_file, input=5):
-#     if day == 4:
-#         x = []
-#         entry = []
-#         with open(input_file, 'r') as f:
-#             for line in f.readlines():
-#                 line = line.strip().split()
-#                 if not line:
-#                     x.append(entry)
-#                     entry = []
-#                 else:
-#                     entry.append(line)
-#         x.append(entry)
-#         bingo_moves = x[0][0][0].split(',')
-#         bingo_moves = list(map(int, bingo_moves))
 
-#         boards = x[1:]
-#         for i in range(len(boards)):
-#             for j in range(len(boards[i])):
-#                 boards[i][j] = list(map(int, boards[i][j]))
 
-#         return bingo_moves, boards
 
-#     if day == 5:
-#         with open(input_file, 'r') as f:
-#             df = []
-#             for line in f.readlines():
-#                 entry = []
-#                 line = line.strip().split('->')
-#                 for i in range(2):
-#                     coords = list(map(int, line[i].strip().split(',')))
-#                     entry.append(coords)
-#                 df.append(entry)
-#         return df
+
+
+
+
+
 
 
 # @dataclass
@@ -104,7 +88,7 @@ fishy_multiplier(256, fish)
 #     #         yield i
 
 #     def part_one(self) -> int:  # Part 2
-#         return 
+#         return
 
 #     def part_two(self) -> None:
 #         return
@@ -112,4 +96,3 @@ fishy_multiplier(256, fish)
 # a = Puzzle_class()
 # print(a.part_one)
 # print(a.part_two)
-
