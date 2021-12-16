@@ -2,10 +2,11 @@ from ElfTech import *
 from SquidBingo import SquidBingo
 from VentNav import VentNav
 from LanternFish import Fish_counter
+from whalewhalewhale import Crab_scooter
 
 # current_day = input("Please input the current day number: ")
 # current_part = input("Please input the current part (0 for both pars): ")
-current_day = 6
+current_day = 7
 current_part = 0
 
 day_apps = [Sonar(),
@@ -13,7 +14,8 @@ day_apps = [Sonar(),
            LifeSupport(), 
            SquidBingo(),
            VentNav(),
-           Fish_counter()]
+           Fish_counter(),
+           Crab_scooter()]
 
 
 if __name__ == '__main__':

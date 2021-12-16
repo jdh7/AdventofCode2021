@@ -49,7 +49,7 @@ def get_input(input_file, day=1) -> list[Any]:
                 df.append(entry)
         return df
 
-    if day == 6:
+    if day == 6 or day == 7:
         with open(input_file, 'r') as f:
             for line in f.readlines():
                 line = [int(i) for i in line.split(',')]
