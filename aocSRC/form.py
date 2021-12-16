@@ -4,7 +4,7 @@ from typing import Any, Union, Dict
 # from SantasHelpers import get_input
 from collections import Counter
 
-def get_input(input_file, input=5):
+def get_input(input_file, day=5):
     if day == 4:
         x = []
         entry = []
