@@ -24,6 +24,7 @@ class Crab_scooter:
             yield i
 
     def part_one(self) -> int:  # Part 2
+        # brute force best force
         all_distances = OrderedDict()
         distances = [[] for i in range(len(self.crab_positions))]
         max_pos = max(self.crab_positions)
