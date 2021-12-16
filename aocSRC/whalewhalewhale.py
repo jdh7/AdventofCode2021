@@ -3,6 +3,7 @@
 from typing import Any, Union, Dict
 from SantasHelpers import get_input
 from collections import Counter, OrderedDict
+import statistics
 
 
 class Crab_scooter:
@@ -14,7 +15,7 @@ class Crab_scooter:
     def run_day(self, part=0):
         answers = []
         a = [self.part_one(),
-            self.part_two()]
+             self.part_two()]
         if part == 0:
             answers.append(a[0])
             answers.append(a[1])
@@ -25,6 +26,13 @@ class Crab_scooter:
 
     def part_one(self) -> int:  # Part 2
         # brute force best force
+
+        # this can also be done by returning the sum of all points absolute
+        # value from the median. but i didn't know that. my implementation of
+        # that:
+        # return int(sum(abs(p-statistics.median(self.crab_positions)) for p in
+                       # self.crab_positions))
+
         all_distances = OrderedDict()
         distances = [[] for i in range(len(self.crab_positions))]
         max_pos = max(self.crab_positions)
@@ -35,8 +43,7 @@ class Crab_scooter:
             all_distances[sum_distances] = distances
             distances = [[] for i in range(len(self.crab_positions))]
 
-        return sorted(all_distances.keys())[0] 
-
+        return sorted(all_distances.keys())[0]
 
     def part_two(self) -> None:
         all_distances = OrderedDict()
@@ -50,4 +57,4 @@ class Crab_scooter:
             all_distances[sum_distances] = distances
             distances = [[] for i in range(len(self.crab_positions))]
 
-        return sorted(all_distances.keys())[0] 
+        return sorted(all_distances.keys())[0]
