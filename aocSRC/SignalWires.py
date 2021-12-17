@@ -3,6 +3,7 @@
 from typing import Any, Union, Dict
 # from SantasHelpers import get_input
 from collections import Counter
+from dataclasses import dataclass
 
 one = "cf"       #2
 seven = "acf"    #3
@@ -17,6 +18,52 @@ zero = "abcefg"  #6
 nine = "abcdfg"  #6
 
 eight = "abcdefg"#7
+
+digit = [['a'],
+         ['b'],['c'],
+         ['d'],
+         ['e'],['f'],
+         ['g']
+]
+"""    1:      4:      7:       8:
+     ....    ....    aaaa     aaaa
+    .    c  b    c  .    c   b    c
+    .    c  b    c  .    c   b    c
+     ....    dddd    ....     dddd
+    .    f  .    f  .    f   e    f
+    .    f  .    f  .    f   e    f
+     ....    ....    ....     gggg
+"""
+
+
+
+class Digit:
+    def __init__(self, x = None):
+        #{top 0, left 1, right 2, mid 3, left 4, right 5, bot 6}
+        self.map_of_digits = {
+            "top": "a",
+            "top_l": "b",
+            "top_r": "c",
+            "mid": "d",
+            "bot_l": "e",
+            "bot_r": "f",
+            "bot": "g"
+    }
+
+    def draw_digit(self):
+        print("\n")
+        print(" "+self.map_of_digits["top"]*4+" ")
+        print(self.map_of_digits["top_l"]+"    "+self.map_of_digits["top_r"])
+        print(self.map_of_digits["top_l"]+"    "+self.map_of_digits["top_r"])
+        print(" "+self.map_of_digits["mid"]*4+" ")
+        print(self.map_of_digits["bot_l"]+"    "+self.map_of_digits["bot_r"])
+        print(self.map_of_digits["bot_l"]+"    "+self.map_of_digits["bot_r"])
+        print(" "+self.map_of_digits["bot"]*4+" ")
+        print("\n")
+
+
+x = Digit()
+x.draw_digit()
 
 
 input_file = r'Data/test.in'
@@ -47,10 +94,13 @@ class Puzzle_class:
                     count[l]=1
                 else:
                     count[l] += 1
-        print(count)
         return  sum([value for key,value in count.items() if key in [2,3,4,7]]) 
 
     def part_two(self) -> None:
+        # Now we must actually solve these digits. 
+        
+
+
         return
 
 a = Puzzle_class()
