@@ -44,14 +44,14 @@ class Part_One:
  .    f  .    f  .    f   e    f
   ....    ....    ....     gggg
 
- 0:       2:       4:
- aaaa     aaaa     ....
-b    c   .    c   b    c
-b    c   .    c   b    c
- ....     dddd     dddd
-e    f   e    .   .    f
-e    f   e    .   .    f
- gggg     gggg     ....
+ 0:       2:      3:
+ aaaa     aaaa    aaaa 
+b    c   .    c  .    c
+b    c   .    c  .    c
+ ....     dddd    dddd 
+e    f   e    .  .    f
+e    f   e    .  .    f
+ gggg     gggg    gggg 
 
   5:       6:       9:
  aaaa     aaaa     aaaa
@@ -151,6 +151,40 @@ class Decoder:
             for i in zip(*lst_to_check)
     ] 
         print(lst_to_check)
+
+        #find out what wires we have in common
+        common_wires = []
+        for i in true_digits:
+            print(i)
+            common_wires.append(scrambled_display[i[1]].code)
+
+        common_wires = [set(x) for x in common_wires]
+        common_wires = set[0].intersection(*common_wires)
+        print(common_wires)
+
+        #set the potential side wires for common sides 
+        for index, e in enumerate(lst_to_check):
+            if e:
+                potential_sides[index][1].update(x for x in common_wires)
+
+        #find the sides we don't have in common
+        uncommon_sides = [0 for _ in range(7)]
+        second_lst_to_check = []
+        for i in true_digits:
+            x = i[0]
+            second_lst_to_check.append(self.has_side[x])
+
+        second_lst_to_check = [
+            int(sum(i) != len(second_lst_to_check))
+            for i in zip(*second_lst_to_check)
+    ] 
+        print(second_lst_to_check)
+
+        #find the wires we dont have in common
+        
+        
+        
+                
 
 
 
