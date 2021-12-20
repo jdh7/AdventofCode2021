@@ -3,10 +3,11 @@ from SquidBingo import SquidBingo
 from VentNav import VentNav
 from LanternFish import Fish_counter
 from whalewhalewhale import Crab_scooter
+from SignalWires import Wire_decoder
 
 # current_day = input("Please input the current day number: ")
 # current_part = input("Please input the current part (0 for both pars): ")
-current_day = 7
+current_day = 8
 current_part = 0
 
 day_apps = [Sonar(),
@@ -15,7 +16,8 @@ day_apps = [Sonar(),
            SquidBingo(),
            VentNav(),
            Fish_counter(),
-           Crab_scooter()]
+           Crab_scooter(),
+           Wire_decoder()]
 
 
 if __name__ == '__main__':

@@ -1,26 +1,8 @@
 # ======= Advent of Code ======= #
 
 from typing import Any, Union, Dict
-# from SantasHelpers import get_input
+from SantasHelpers import get_input
 from collections import Counter
-
-
-input_file = r'Data/test.in'
-
-
-def get_input(input_file, day=8):
-    if day == 8:
-        with open(input_file, 'r') as f:
-            signal_patterns = []
-            output_values = []
-            for line in f.readlines():
-                x, y = line.split('|')
-                x = x.split()
-                y = y.split()
-                signal_patterns.append(x)
-                output_values.append(y)
-        return signal_patterns, output_values
-
 
 class Wire_decoder:
     def __init__(self, input=8) -> None:
@@ -29,12 +11,33 @@ class Wire_decoder:
         self.signal_patterns, self.output_values = get_input(
             self.input_file, input)
 
+    def run_day(self, part=0):
+        answers = []
+        a = [self.part_one(),
+            self.part_two()]
+        if part == 0:
+            answers.append(a[0])
+            answers.append(a[1])
+        else:
+            answers.append(a[part])
+        for i in answers:
+            yield i
+
+    def part_one(self):
+        count = 0
+        for i in self.output_values:
+            for j in i:
+                x = [2,3,4,7]
+                if len(j) in x:
+                    count += 1
+        return count
+
     def part_two(self):
         answer = 0
         for i, j in zip(self.signal_patterns, self.output_values):
             i_wire_map = self.map_wires(i)
             answer += self.decode_output(j, i_wire_map)
-        print(answer)
+        return(answer)
 
     def decode_output(self, output_value, wire_map):
         code = []
@@ -154,7 +157,6 @@ class Wire_decoder:
 
         wire_map = find_wires()
         return wire_map
-            
 
 a = Wire_decoder()
-a.part_two()
+print(a.part_one())

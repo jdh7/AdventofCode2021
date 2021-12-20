@@ -53,7 +53,19 @@ def get_input(input_file, day=1) -> list[Any]:
         with open(input_file, 'r') as f:
             for line in f.readlines():
                 line = [int(i) for i in line.split(',')]
-    return line
+        return line
+
+    if day == 8:
+        with open(input_file, 'r') as f:
+            signal_patterns = []
+            output_values = []
+            for line in f.readlines():
+                x, y = line.split('|')
+                x = x.split()
+                y = y.split()
+                signal_patterns.append(x)
+                output_values.append(y)
+        return signal_patterns, output_values
 
 def bin_to_dec(x:list[str])->int:
     return int((''.join(x)), 2)
