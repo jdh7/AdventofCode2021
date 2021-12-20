@@ -7,6 +7,8 @@ from dataclasses import dataclass
 
 
 input_file = r'Data/test.in'
+
+
 def get_input(input_file, day=8):
     if day == 8:
         with open(input_file, 'r') as f:
@@ -21,45 +23,66 @@ def get_input(input_file, day=8):
         return signal_patterns, output_values
 
 
-@dataclass
-class Screen:
-    has_side = {
-        # 0 : [1,1,1,0,1,1,1],      # 6
-        1 : [0,0,1,0,0,1,0],        # 2
-
-        # 2 : [1,0,1,1,1,0,1],      # 5
-        # 3 : [1,0,1,1,0,1,1],      # 5
-        4 : [0,1,1,1,0,1,0],        # 4
-        # 5 : [1,1,0,1,0,1,1],      # 5
-
-        # 6 : [1,1,0,1,1,1,1],      # 6
-        7 : [1,0,1,0,0,1,0],        # 3
-        8 : [1,1,1,1,1,1,1],        # 7
-        # 9 : [1,1,1,1,0,1,1]       # 6
-    }
-
-
-class Part_One:
+class Wire_decoder:
     def __init__(self, input=8) -> None:
         # self.input_file = r'Data/Day8.in'
         self.input_file = r'Data/test.in'
-        self.signal_patterns, self.output_values = get_input(self.input_file, input)
+        self.signal_patterns, self.output_values = get_input(
+            self.input_file, input)
 
     def part_two(self):
-        for i in self.signal_patterns:
+        answer = 0
+        for i, j in zip(self.signal_patterns, self.output_values):
+            i_wire_map = self.map_wires(i)
+            answer += self.decode_output(j, i_wire_map)
+        print(answer)
+    def decode_output(self, output_value, wire_map):
+        code = []
+        for i in output_value:
             print(i)
-            self.map_wires(i)
-            exit(0)
+            x = {2:1, 3:7, 4:4, 7:8}
+            if len(i) in x:
+                print("adding unique number")
+                code.append(x[len(i)])
+            elif len(i) == 5:
+                if wire_map['TL'] in i:
+                    print("adding 5")
+                    code.append(5)
+                if wire_map['BL'] in i:
+                    print("adding 2")
+                    code.append(2)
+                if (wire_map['TL'] not in i) and (wire_map['BL'] not in i):
+                    print("adding 3")
+                    code.append(3)
+            elif len(i) == 6:
+                if wire_map['M'] not in i:
+                    print("adding 0")
+                    code.append(0)
+                if wire_map['TR'] not in i:
+                    print("adding 6")
+                    code.append(6)
+                if (wire_map['BL'] not in i) and (wire_map['BL'] not in i):
+                    print("adding 9")
+                    code.append(9)
+        print(code)
+        int_code = ""
+        for i in code:
+            int_code += str(i)
+
+        return(int(int_code))
+
+
+
 
     def map_wires(self, scrambled_display):
         wire_map = {
-            'T': set(),
-            'TL': set(),
-            'TR': set(),
-            'M': set(),
-            'BL': set(),
-            'BR': set(),
-            'B': set()
+            'T': None,
+            'TL': None,
+            'TR': None,
+            'M': None,
+            'BL': None,
+            'BR': None,
+            'B': None
         }
         scrambled_display.sort(key=len)
         # print(scrambled_display)
@@ -74,54 +97,76 @@ class Part_One:
         for i in scrambled_display[6:9]:
             stringplus += i
         six_len = dict(Counter(stringplus))
-        sev_len = dict(Counter(scrambled_display[8]))
+
         def find_wires():
             for i in "abcdefg":
-                #Top
-                if (i not in two_len) and (i in sev_len) and (i not in
-    four_len) and (five_len[i] == 3) and (six_len[i] == 3):
+                # Top
+                if (i not in two_len) \
+                    and (i in three_len) \
+                    and (i not in four_len) \
+                    and (five_len[i] == 3) \
+                    and (six_len[i] == 3):
                     wire_map['T'] = i
-                #TopLeft
-                if (i not in two_len) and (i in three_len) and (i in four_len) and (five_len[i] == 1) and (six_len[i] == 3):
+                # TopLeft
+                if (i not in two_len) \
+                    and (i not in three_len) \
+                    and (i in four_len) \
+                    and (five_len[i] == 1) \
+                    and (six_len[i] == 3):
                     wire_map['TL'] = i
-                #TopRight
-                if (i in two_len) and (i in three_len) and (i in four_len) and (five_len[i] == 2) and (six_len[i] == 2):
+                # TopRight
+                if (i in two_len) \
+                    and (i in three_len) \
+                    and (i in four_len) \
+                    and (five_len[i] == 2) \
+                    and (six_len[i] == 2):
                     wire_map['TR'] = i
-                #MID
-                if (i not in two_len) and (i not in three_len) and (i in four_len) and (five_len[i] == 3) and (six_len[i] == 2):
+                # MID
+                if (i not in two_len) \
+                    and (i not in three_len) \
+                    and (i in four_len) \
+                    and (five_len[i] == 3) \
+                    and (six_len[i] == 2):
                     wire_map['M'] = i
-                #BotLeft
-                if (i not in two_len) and (i not in three_len) and (i not in four_len) and (five_len[i] == 1) and (six_len[i] == 2):
+                # BotLeft
+                if (i not in two_len) \
+                    and (i not in three_len) \
+                    and (i not in four_len) \
+                    and (five_len[i] == 1) \
+                    and (six_len[i] == 2):
                     wire_map['BL'] = i
-                #BotRight
-                if (i in two_len) and (i in three_len) and (i in four_len) and (five_len[i] == 2) and (six_len[i] == 3):
+                # BotRight
+                if (i in two_len) \
+                    and (i in three_len) \
+                    and (i in four_len) \
+                    and (five_len[i] == 2) \
+                    and (six_len[i] == 3):
                     wire_map['BR'] = i
-                #BOT
-                if (i not in two_len) and (i not in three_len) and (i not in four_len) and (five_len[i] == 3) and (six_len[i] == 3):
+                # BOT
+                if (i not in two_len) \
+                    and (i not in three_len) \
+                    and (i not in four_len) \
+                    and (five_len[i] == 3) \
+                    and (six_len[i] == 3):
                     wire_map['B'] = i
 
+            # find remainder letter in case
+            remainder = ""
+            for i in "abcdefg":
+                if i not in wire_map.values():
+                    remainder = i
+                    
+            for k,v in wire_map.items():
+                if v == None:
+                    wire_map[k] = remainder
+
+            return wire_map
 
 
 
-        has_side = {
-            1 : [0,0,1,0,0,1,0],        # 2
-            7 : [1,0,1,0,0,1,0],        # 3
-            4 : [0,1,1,1,0,1,0],        # 4
+        wire_map = find_wires()
+        return wire_map
+            
 
-          # 2 : [1,0,1,1,1,0,1],      # 5
-          # 3 : [1,0,1,1,0,1,1],      # 5
-          # 5 : [1,1,0,1,0,1,1],      # 5
-
-          # 0 : [1,1,1,0,1,1,1],      # 6
-          # 6 : [1,1,0,1,1,1,1],      # 6
-          # 9 : [1,1,1,1,0,1,1]       # 6
-
-            8 : [1,1,1,1,1,1,1]        # 7
-        }
-
-        
-
-
-
-a = Part_One()
+a = Wire_decoder()
 a.part_two()
